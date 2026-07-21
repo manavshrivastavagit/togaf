@@ -1,0 +1,14 @@
+Please read this scenario prior to answering the question.
+Your role is that of a consultant to the Lead Enterprise Architect in a multinational automotive manufacturer. The company has a corporate strategy that focuses on electrification of its portfolio and it has invested heavily in a new shared car platform to use across all its brands. The company has four manufacturing facilities, one in North America two in Europe and one in Asia.
+A challenge that the company is facing is to scale up the number of vehicles coming off the production line to meet customer demand, while maintaining quality. There are significant supply chain shortages for electronic components, which are impacting production in response to this the company has taken on new suppliers and has also taken design and production of the battery pack in-house.
+The company has a mature Enterprise Architecture practice. The TOGAF standard is used for developing the process and systems used to design, manufacture, and test the battery pack. The Chief Information Officer and the Chief Operating Officer co-sponsor the Enterprise Architecture program.
+As part of putting the new battery pack into production adjustments to the assembly processes need to be made. A pilot project has been completed at a single location. The Chief Engineer, sponsor of the activity and the Architecture Board have approved the plan for implementation and migration at each plant.
+Draft Architecture Contracts have been developed that detail the work needed to implement and deploy the new processes for each location. The company mixes internal teams with a few third-party contractors at the locations. The Chief Engineer has expressed concern that the deployment will not be consistent and of acceptable quality.
+Refer to the scenario.
+The Lead Enterprise Architect has asked you to review the draft Architecture Contracts and recommend the best approach to address the Chief Engineer's concern.
+Based on the TOGAF Standard, which of the following is the best answer?
+
+**You review the contracts ensuring that they address project objectives, effectiveness metrics, acceptance criteria, and risk management. Third-party contracts must be legally enforceable. You recommend a schedule of compliance reviews at key points in the implementation process. You recommend that the Architecture Board reviews all deviations from the Architecture Contract and considers whether to grant a dispensation to allow the process to be customized for local needs.**
+
+>https://www.examtopics.com/discussions/the-open-group/view/130430-exam-ogea-103-topic-1-question-44-discussion/
+>https://awslagi.com/course/ogea-103/lessons/ogea-103-togaf-enterprise-architecture-combined-part-1-and-part-2-topic-2/

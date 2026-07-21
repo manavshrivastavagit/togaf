@@ -1,0 +1,200 @@
+[
+    {
+        "question": "An organization is struggling with inconsistent project outcomes and a lack of alignment with business strategy. As the lead architect, you are implementing Phase A. Which of the following is the MOST critical output to create to address this situation?",
+        "options": [
+            "A detailed Architecture Vision document that outlines the target state.",
+            "A comprehensive Stakeholder Map to identify all key players.",
+            "An approved Statement of Architecture Work that secures buy-in and defines scope.",
+            "A Communications Plan to keep all stakeholders informed."
+        ],
+        "answer": "An approved Statement of Architecture Work that secures buy-in and defines scope.",
+        "explanation": "While all are important, the Statement of Architecture Work is the most critical output in this scenario. It acts as a formal contract between the architecture team and the sponsoring organization, defining the scope, constraints, and success factors. Securing formal approval for this document ensures that there is a shared understanding and commitment to the project's objectives, directly addressing the problem of inconsistent outcomes and strategic misalignment."
+    },
+    {
+        "question": "Your company's board is concerned about the high cost of custom-developed applications. You are in Phase E (Opportunities & Solutions). Which TOGAF concept would be most effective in your presentation to the board to address their concerns?",
+        "options": [
+            "Presenting a detailed Gap Analysis to show the differences between Baseline and Target Architectures.",
+            "Using the Architecture Continuum to classify existing assets and identify reusable building blocks.",
+            "Proposing a set of new, stricter Architecture Principles.",
+            "Showcasing a detailed Implementation and Migration Plan."
+        ],
+        "answer": "Using the Architecture Continuum to classify existing assets and identify reusable building blocks.",
+        "explanation": "The Architecture Continuum is the ideal tool for this situation. By classifying existing solutions from generic (e.g., COTS products) to specific (custom-built), you can demonstrate opportunities for reuse and the adoption of more standardized, cost-effective solutions (Solution Building Blocks), directly addressing the board's cost concerns. While a Gap Analysis is important, the Continuum provides a strategic context for making sourcing decisions."
+    },
+    {
+        "question": "A project team is in the middle of implementation and discovers that a key technology component specified in the Technology Architecture is now obsolete. According to the Architecture Governance Framework, what is the IMMEDIATE next step?",
+        "options": [
+            "The project team should select a suitable, modern replacement and continue building.",
+            "The lead architect should update the Technology Architecture and inform the team.",
+            "A formal Architecture Change Request should be submitted to the Architecture Board.",
+            "A dispensation should be requested for this project only."
+        ],
+        "answer": "A formal Architecture Change Request should be submitted to the Architecture Board.",
+        "explanation": "This situation represents a significant change with potential impacts beyond the immediate project. The correct governance procedure is to raise an Architecture Change Request. This allows the Architecture Board to assess the strategic implications of the change, approve a new standard, and update the architecture. A dispensation is for a one-off deviation, not for a standard that has become obsolete."
+    },
+    {
+        "question": "You are developing the Business Architecture in Phase B for a large retail company. The business stakeholders are finding it difficult to articulate their precise needs. Which technique would be MOST effective for eliciting requirements and demonstrating business value?",
+        "options": [
+            "Conducting a formal review of the existing process documentation.",
+            "Creating detailed organization charts and functional decompositions.",
+            "Developing a Business Scenario to walk through a key customer journey.",
+            "Performing a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis of the company."
+        ],
+        "answer": "Developing a Business Scenario to walk through a key customer journey.",
+        "explanation": "Business Scenarios are a powerful TOGAF technique for this exact purpose. By creating a narrative around a real-world business problem or opportunity (like a customer journey), architects can help stakeholders visualize the future state, articulate their requirements in a structured way, and clearly see the business value of the proposed changes. It makes the abstract concepts of architecture tangible."
+    },
+    {
+        "question": "An organization has successfully implemented a new architecture. Six months later, the business strategy shifts to focus on international expansion. Which ADM phase is specifically designed to handle this type of change?",
+        "options": [
+            "Phase G (Implementation Governance)",
+            "Phase H (Architecture Change Management)",
+            "A new Preliminary Phase to restart the ADM.",
+            "Phase A (Architecture Vision)"
+        ],
+        "answer": "Phase H (Architecture Change Management)",
+        "explanation": "Phase H is designed to establish a dynamic, ongoing process for managing changes to the architecture after implementation. A significant shift in business strategy is a primary trigger for an architecture change. Phase H provides the framework to evaluate the impact of the new strategy and initiate a new ADM cycle in a controlled manner, often leading back to Phase A with a new Request for Architecture Work."
+    },
+    {
+        "question": "A company's CIO wants to create a more integrated enterprise architecture to improve efficiency and data sharing between two historically siloed business units. As the architect in Phase C, what would be the most effective way to model the future state?",
+        "options": [
+            "Create separate application architecture models for each business unit to respect their autonomy.",
+            "Define a set of common Data Entities and develop an Application Communication Diagram showing how integrated systems will share this data.",
+            "Focus solely on a Technology Architecture consolidation plan to reduce server costs.",
+            "Recommend a single, monolithic ERP system to replace all existing applications."
+        ],
+        "answer": "Define a set of common Data Entities and develop an Application Communication Diagram showing how integrated systems will share this data.",
+        "explanation": "This approach directly addresses the core problem of data sharing and integration. Defining common data entities (Data Architecture) and showing how applications will communicate (Application Architecture) is the primary goal of Phase C in this context. Focusing only on technology or recommending a specific product misses the architectural steps needed to ensure true integration."
+    },
+    {
+        "question": "During Phase F (Migration Planning), the team identifies several large work packages. The business stakeholders are risk-averse and concerned about a 'big bang' implementation. How should you structure the Implementation and Migration Plan to address this?",
+        "options": [
+            "Group all work packages into a single, comprehensive project to be completed in one fiscal year.",
+            "Insist that the Target Architecture must be implemented all at once to realize its full value.",
+            "Define a series of Transition Architectures, each delivering a discrete set of business value, and sequence the work packages accordingly.",
+            "Create a plan based on the easiest-to-implement technical components first, regardless of business value."
+        ],
+        "answer": "Define a series of Transition Architectures, each delivering a discrete set of business value, and sequence the work packages accordingly.",
+        "explanation": "Transition Architectures are a key TOGAF concept for managing complex, phased migrations. They allow an organization to move from the Baseline to the Target Architecture in a series of manageable steps, each delivering incremental business value. This directly addresses the stakeholder's risk aversion and concern about a 'big bang' deployment."
+    },
+    {
+        "question": "An Architecture Board review finds that a project has used a non-standard database technology without approval. As the lead of the Architecture Board, what is the most appropriate action according to TOGAF governance principles?",
+        "options": [
+            "Halt the project immediately until the non-compliant component is replaced.",
+            "Grant a retroactive dispensation since the work is already done to avoid project delays.",
+            "Conduct a formal Architecture Compliance Review to assess the impact of the deviation and determine the next steps.",
+            "Update the Technology Architecture to include the new database as an approved standard automatically."
+        ],
+        "answer": "Conduct a formal Architecture Compliance Review to assess the impact of the deviation and determine the next steps.",
+        "explanation": "Effective governance requires a formal, structured process. The Architecture Compliance Review is the correct mechanism to evaluate the situation. It assesses the reasons for the deviation, its impact on the enterprise architecture, and the cost/risk of remediation. This allows for an informed decision rather than a reactive one that could undermine the governance process."
+    },
+    {
+        "question": "You are in the Preliminary Phase, establishing the Architecture Capability for a company that has never had a formal EA practice. What is the MOST critical activity to ensure the long-term success and adoption of the new practice?",
+        "options": [
+            "Select and purchase a sophisticated, top-of-the-line EA tool to show commitment.",
+            "Tailor the TOGAF framework to the organization's specific needs and define a set of initial, high-impact principles.",
+            "Immediately start a full ADM cycle on the company's most complex and high-profile project.",
+            "Train every employee in the IT department on the full TOGAF standard."
+        ],
+        "answer": "Tailor the TOGAF framework to the organization's specific needs and define a set of initial, high-impact principles.",
+        "explanation": "The Preliminary Phase is about creating the right foundation. Tailoring is critical because a one-size-fits-all application of TOGAF is likely to be rejected by the organization's culture. Customizing the framework and defining a small set of clear, impactful principles makes the EA practice relevant and helps demonstrate value early, which is key for adoption and long-term success."
+    },
+    {
+        "question": "A project is in Phase G, and an Architecture Contract is in place. The project manager reports they can deliver 20% under budget by cutting a specific security feature that was defined in the architecture. As the governance architect, what is the correct response?",
+        "options": [
+            "Approve the change immediately to realize the cost savings for the business.",
+            "State that the Architecture Contract is non-negotiable and the feature must be implemented regardless of cost.",
+            "Evaluate the proposed change against the architecture principles, assess the business impact and risk of removing the feature, and present the trade-off to stakeholders.",
+            "Escalate the issue directly to the CIO without further analysis."
+        ],
+        "answer": "Evaluate the proposed change against the architecture principles, assess the business impact and risk of removing the feature, and present the trade-off to stakeholders.",
+        "explanation": "The core of Implementation Governance is managing these exact trade-offs in a structured way. A cost saving does not automatically trump an architectural requirement, especially a security one. The architect's role is to perform a formal analysis of the trade-off—balancing the cost benefit against the business risk—and present this information to the relevant stakeholders to enable an informed business decision."
+    },
+    {
+        "question": "An organization wants to build a standardized platform to host all its new applications, aiming to reduce integration costs and improve interoperability. As the architect, which TOGAF reference model would you use as a starting point to define the generic services needed?",
+        "options": [
+            "The Integrated Information Infrastructure Reference Model (III-RM).",
+            "The Business Reference Model (BRM).",
+            "The Technical Reference Model (TRM).",
+            "The Solution Architecture Reference Model (SARM)."
+        ],
+        "answer": "The Technical Reference Model (TRM).",
+        "explanation": "The TRM is designed for this exact purpose. It provides a model and taxonomy of generic platform services (e.g., data management, security, communication services) that form the foundation of a technology architecture. It helps create a standardized vocabulary and structure for the platform, directly supporting the goal of interoperability."
+    },
+    {
+        "question": "A financial services company is merging with a competitor. The CIO's primary goal is to enable 'boundaryless information flow' between the two entities to cross-sell products. Which TOGAF concept provides the best framework for architecting this capability?",
+        "options": [
+            "The Architecture Vision, to create a high-level goal.",
+            "The Integrated Information Infrastructure Reference Model (III-RM), to model the required application and infrastructure services.",
+            "The Enterprise Continuum, to classify the assets of both companies.",
+            "A Gap Analysis, to identify the differences in their application portfolios."
+        ],
+        "answer": "The Integrated Information Infrastructure Reference Model (III-RM), to model the required application and infrastructure services.",
+        "explanation": "The III-RM is a Common Systems Architecture specifically designed to address 'boundaryless information flow'. It provides a model of the key services and components (e.g., information provider, request-broker, application services) needed to allow secure, integrated access to information across organizational boundaries, which is the core challenge in a merger."
+    },
+    {
+        "question": "You are in Phase D (Technology Architecture). An architecture principle is 'Cloud First,' but a key legacy application requires an on-premise mainframe. How should this be handled in the Target Technology Architecture?",
+        "options": [
+            "Ignore the principle for this specific case and document the mainframe as the target without further comment.",
+            "Exclude the legacy application from the scope of the target architecture to avoid the conflict.",
+            "Document the mainframe as a necessary exception to the principle, including a rationale and a potential roadmap for its eventual migration or retirement.",
+            "Change the principle to 'Cloud Optional' to accommodate the exception."
+        ],
+        "answer": "Document the mainframe as a necessary exception to the principle, including a rationale and a potential roadmap for its eventual migration or retirement.",
+        "explanation": "Architecture principles are guidelines, not immutable laws. The correct approach is to acknowledge the conflict, formally document the deviation with a clear business or technical rationale, and show its impact. Including a plan for future alignment (e.g., a retirement roadmap) demonstrates good governance and maintains the integrity of the principle for other decisions."
+    },
+    {
+        "question": "During a compliance review in Phase G, a project's business analyst reveals that a new legal regulation has introduced a critical data privacy requirement that was not in the original scope. How should the central Requirements Management process handle this?",
+        "options": [
+            "Halt the project and restart the ADM from Phase A to address the new legal context.",
+            "Log the new requirement, assess its impact on the architecture and any in-progress projects, and feed it back into the appropriate ADM phases for action.",
+            "Instruct the project team to handle the new requirement as best they can without changing the formal architecture.",
+            "Reject the requirement as it is out of scope for the current project."
+        ],
+        "answer": "Log the new requirement, assess its impact on the architecture and any in-progress projects, and feed it back into the appropriate ADM phases for action.",
+        "explanation": "The Requirements Management process is a dynamic, central function that operates throughout the ADM. The correct procedure is to formally capture the new requirement, analyze its impact across all architectural domains, and then cycle back through the relevant ADM phases (e.g., Phase C for Data, Phase G for the current project) to implement the necessary changes in a controlled way."
+    },
+    {
+        "question": "The CFO is focused on reducing operational expenditure, while the Head of Marketing is demanding a new, feature-rich (and expensive) CRM platform to drive sales. As the architect, how can you use Views and Viewpoints to facilitate a decision?",
+        "options": [
+            "Create a single, highly technical view that shows all aspects of the architecture to both stakeholders.",
+            "Develop two separate Views: one from a 'Cost' Viewpoint for the CFO showing TCO, and another from a 'Business Process' Viewpoint for Marketing showing the new capabilities.",
+            "Tell the stakeholders that their concerns are conflicting and they must come to a consensus before the architecture can proceed.",
+            "Side with the CFO as cost is always the primary constraint in any business."
+        ],
+        "answer": "Develop two separate Views: one from a 'Cost' Viewpoint for the CFO showing TCO, and another from a 'Business Process' Viewpoint for Marketing showing the new capabilities.",
+        "explanation": "This is the core purpose of Views and Viewpoints: to tailor the representation of the architecture to the specific concerns of each stakeholder. By creating a financial view for the CFO and a functional view for Marketing, you acknowledge and address both their concerns. This enables a more informed trade-off discussion where the business value (from Marketing's view) can be weighed against the total cost of ownership (from the CFO's view)."
+    },
+    {
+        "question": "You are preparing the Business Architecture Deliverable for a formal sign-off meeting at the end of Phase B. To be compliant with the Architecture Content Framework, which of the following is an essential artifact to include?",
+        "options": [
+            "A detailed network diagram of the corporate LAN.",
+            "A list of approved hardware vendors for the coming fiscal year.",
+            "A Business Process Model showing the target 'to-be' processes.",
+            "A server consolidation plan for the data center."
+        ],
+        "answer": "A Business Process Model showing the target 'to-be' processes.",
+        "explanation": "A Deliverable is a formal work product composed of multiple artifacts. According to the Architecture Content Framework, a Business Process Model is a key artifact of the Business Architecture. Network diagrams and server plans belong to the Technology Architecture, and vendor lists are typically outputs of implementation planning, not the core Business Architecture deliverable."
+    },
+    {
+        "question": "A retail company is building a new e-commerce platform. During Phase C (Data Architecture), the architect discovers that customer personally identifiable information (PII) is being stored in three separate, poorly secured databases. Which artifact would be MOST effective for communicating the security risk to non-technical business stakeholders?",
+        "options": [
+            "A detailed data dictionary listing all PII attributes.",
+            "A formal data migration plan for the databases.",
+            "A Data Security Diagram showing how PII is unprotected and where it flows.",
+            "A technical report on the database vulnerabilities."
+        ],
+        "answer": "A Data Security Diagram showing how PII is unprotected and where it flows.",
+        "explanation": "A visual diagram is far more effective for communicating with non-technical stakeholders than a technical report or data dictionary. A Data Security Diagram can visually highlight where sensitive data (PII) resides and how it flows between systems without proper controls (e.g., encryption, access restrictions). This makes the abstract risk of a data breach tangible and understandable, prompting business action."
+    },
+    {
+        "question": "When setting up an organization's first Architecture Repository, the Head of Architecture wants to maximize the reuse of common solutions and standards across all future projects. Which part of the repository should be prioritized for population?",
+        "options": [
+            "The Architecture Landscape, to document all current projects.",
+            "The Governance Log, to track all decisions made by the Architecture Board.",
+            "The Architecture Metamodel, to define the structure of the repository itself.",
+            "The Reference Library, to store approved policies, patterns, and reference architectures."
+        ],
+        "answer": "The Reference Library, to store approved policies, patterns, and reference architectures.",
+        "explanation": "The Reference Library is the designated section of the Architecture Repository for storing reusable assets. By prioritizing the population of the Reference Library with common patterns, standards (e.g., security standards), and reusable reference architectures (both internal and from industry sources), the architect directly supports the goal of maximizing reuse and consistency across the enterprise."
+    }
+]
