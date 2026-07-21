@@ -1,0 +1,81 @@
+[
+  {
+    "externalId": "app-go-onboarding",
+    "name": "go-onboarding",
+    "type": "Application",
+    "description": "In-house microservice written in Go responsible for customer identity validation, Aadhaar e-KYC parsing, and HyperVerge biometric liveness integrations.",
+    "properties": {
+      "technicalSuitability": "appropriate",
+      "functionalSuitability": "appropriate",
+      "businessCriticality": "missionCritical",
+      "lifecycle": {
+        "phases": {
+          "active": "2026-05-01"
+        }
+      }
+    },
+    "relations": [
+      {
+        "type": "relApplicationToBusinessCapability",
+        "targetExternalId": "cap-identity-verify"
+      },
+      {
+        "type": "relApplicationToTechnologyStack",
+        "targetExternalId": "tech-aws-eks"
+      }
+    ]
+  },
+  {
+    "externalId": "app-python-risk",
+    "name": "python-risk",
+    "type": "Application",
+    "description": "Custom FastAPI risk service executing automated underwriting scorecards, bureau scrapes, and dynamic pricing decisions.",
+    "properties": {
+      "technicalSuitability": "appropriate",
+      "functionalSuitability": "appropriate",
+      "businessCriticality": "missionCritical",
+      "lifecycle": {
+        "phases": {
+          "active": "2026-05-01"
+        }
+      }
+    },
+    "relations": [
+      {
+        "type": "relApplicationToBusinessCapability",
+        "targetExternalId": "cap-underwriting"
+      },
+      {
+        "type": "relApplicationToTechnologyStack",
+        "targetExternalId": "tech-aws-eks"
+      }
+    ]
+  },
+  {
+    "externalId": "cap-identity-verify",
+    "name": "Identity & Liveness Verification",
+    "type": "BusinessCapability",
+    "description": "The capability to perform zero-touch, real-time customer identification checks.",
+    "properties": {
+      "level": 2
+    }
+  },
+  {
+    "externalId": "cap-underwriting",
+    "name": "Instant Underwriting & Pricing",
+    "type": "BusinessCapability",
+    "description": "The capability to analyze financial history and dynamically size loan offers without manual credit review.",
+    "properties": {
+      "level": 2
+    }
+  },
+  {
+    "externalId": "tech-aws-eks",
+    "name": "AWS EKS Cluster",
+    "type": "ITComponent",
+    "description": "Managed Amazon Elastic Kubernetes Service hosting containerized lending microservices.",
+    "properties": {
+      "category": "Software"
+    }
+  }
+]

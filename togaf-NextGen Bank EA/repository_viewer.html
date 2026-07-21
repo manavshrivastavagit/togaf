@@ -1,0 +1,2671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextGen Bank - TOGAF EA Repository Portal</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="NextGen Bank Enterprise Architecture Repository. Structured under TOGAF 10 ADM Standard. Featuring full-text search, visual ADM mind map navigation, and document compliance portals.">
+  <meta name="keywords" content="TOGAF, Enterprise Architecture, Banking, Micro-Loan, STP, API-First, Regulatory Compliance, India Stack">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CDNs for Markdown, Mermaid, Math, and SVG Zoom rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/auto-render.min.js"></script>
+  
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --sidebar-bg: #111827;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-color: #06b6d4;
+      --accent-hover: #22d3ee;
+      --accent-glow: rgba(6, 182, 212, 0.35);
+      --border-color: #1f2937;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --card-border: #374151;
+      --sidebar-width: 320px;
+      --toc-width: 240px;
+      --header-height: 70px;
+      --tabs-height: 44px;
+      --glass-bg: rgba(17, 24, 39, 0.75);
+      --glass-blur: blur(16px);
+      --shadow-premium: 0 10px 30px -10px rgba(0,0,0,0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(17, 24, 39, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #374151;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-color);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Main Container Split screen when offline loader is shown */
+    #app-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Sidebar Styles */
+    aside {
+      width: var(--sidebar-width);
+      background-color: var(--sidebar-bg);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      z-index: 100;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .brand {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      position: relative;
+    }
+
+    .brand::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    }
+
+    .brand h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #22d3ee, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Sidebar Search */
+    .search-container {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      background-color: #1f2937;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px 8px 36px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-muted);
+      fill: none;
+      pointer-events: none;
+    }
+
+    /* Sidebar Nav Categories - Collapsible Folder Tree */
+    .nav-sections {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .nav-group {
+      margin-bottom: 6px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .folder-header {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .folder-header:hover {
+      background-color: rgba(55, 65, 81, 0.4);
+      color: var(--accent-hover);
+    }
+
+    .folder-arrow {
+      margin-right: 8px;
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s ease;
+      stroke: var(--text-muted);
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .folder-icon {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent-color);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .folder-children {
+      margin-left: 20px;
+      padding-left: 8px;
+      border-left: 1px dashed var(--border-color);
+      display: none;
+    }
+
+    .folder-children.expanded {
+      display: block;
+    }
+
+    .folder-header.expanded .folder-arrow {
+      transform: rotate(90deg);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      margin-bottom: 2px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background-color: rgba(6, 182, 212, 0.08);
+      color: var(--accent-color);
+    }
+
+    .nav-link.active {
+      font-weight: 500;
+      border-left: 2px solid var(--accent-color);
+      padding-left: 8px;
+    }
+
+    .file-icon {
+      margin-right: 6px;
+      width: 14px;
+      height: 14px;
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .nav-link.active .file-icon {
+      stroke: var(--accent-color);
+    }
+
+    /* Main Content Styles */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background-color: var(--bg-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header {
+      height: var(--header-height);
+      padding: 0 32px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(12px);
+      z-index: 90;
+      flex-shrink: 0;
+    }
+
+    .breadcrumbs-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumbs span {
+      margin: 0 4px;
+    }
+
+    .breadcrumbs a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--accent-color);
+    }
+
+    .current-path {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Mode Switching Buttons (Tabs View vs Visual Explorer) */
+    .view-toggle-container {
+      display: flex;
+      background-color: #1f2937;
+      border-radius: 8px;
+      padding: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    .view-toggle-btn {
+      padding: 6px 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-toggle-btn.active {
+      background-color: var(--bg-color);
+      color: var(--accent-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .badge-governed {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      border: 1px solid var(--accent-color);
+      padding: 4px 10px;
+      border-radius: 20px;
+      background-color: rgba(6, 182, 212, 0.05);
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+      letter-spacing: 0.05em;
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      height: var(--tabs-height);
+      background-color: var(--sidebar-bg);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: flex-end;
+      overflow-x: auto;
+      padding: 0 16px;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+
+    .tab-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      background-color: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      max-width: 180px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .tab:hover {
+      background-color: rgba(31, 41, 55, 0.7);
+      color: var(--text-main);
+    }
+
+    .tab.active {
+      background-color: var(--bg-color);
+      color: var(--accent-color);
+      border-top: 2px solid var(--accent-color);
+      font-weight: 500;
+    }
+
+    .tab-close {
+      margin-left: 8px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .tab-close:hover {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    /* Panel Views */
+    .panel-view {
+      flex: 1;
+      width: 100%;
+      height: calc(100% - var(--header-height) - var(--tabs-height));
+      display: none;
+      overflow: hidden;
+    }
+
+    .panel-view.active {
+      display: flex;
+    }
+
+    /* Document Viewer Split Panel with TOC */
+    .viewer-split-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .viewer-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px 48px;
+      scroll-behavior: smooth;
+    }
+
+    .content-container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 48px;
+      box-shadow: var(--shadow-premium);
+    }
+
+    /* TOC Sidebar Right */
+    .toc-sidebar {
+      width: var(--toc-width);
+      border-left: 1px solid var(--border-color);
+      background-color: rgba(17, 24, 39, 0.2);
+      padding: 40px 20px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .toc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item {
+      margin-bottom: 8px;
+    }
+
+    .toc-link {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: block;
+      line-height: 1.4;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-link:hover {
+      color: var(--accent-color);
+      padding-left: 4px;
+    }
+
+    .toc-link.active {
+      color: var(--accent-color);
+      font-weight: 600;
+      border-left: 2px solid var(--accent-color);
+      padding-left: 6px;
+    }
+
+    .toc-depth-1 { padding-left: 0px; }
+    .toc-depth-2 { padding-left: 10px; font-size: 0.74rem; }
+    .toc-depth-3 { padding-left: 20px; font-size: 0.7rem; color: #6b7280; }
+
+    /* Visual Explorer Panel (Mind Map) */
+    .visual-explorer-panel {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: linear-gradient(135deg, #090c15 0%, #111827 100%);
+    }
+
+    .visual-explorer-container {
+      position: relative;
+      background: rgba(17, 24, 39, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-premium);
+      max-width: 1080px;
+      width: 100%;
+    }
+
+    .visual-explorer-header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .visual-explorer-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .visual-explorer-header p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .mindmap-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .mindmap-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .hotspot {
+      position: absolute;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: rgba(6, 182, 212, 0.01);
+      z-index: 10;
+    }
+
+    .hotspot:hover {
+      border-color: var(--accent-color);
+      background-color: rgba(6, 182, 212, 0.1);
+      box-shadow: 0 0 20px var(--accent-color), inset 0 0 10px var(--accent-color);
+    }
+
+    /* Glow overlays on hover */
+    .mindmap-wrapper:has(.hotspot:hover) .mindmap-img {
+      opacity: 0.35;
+      filter: blur(2px) grayscale(50%);
+    }
+
+    .mindmap-wrapper:has(.hotspot:hover) .hotspot:not(:hover) {
+      opacity: 0.4;
+    }
+
+    /* Hotspot Floating Tooltip */
+    .hotspot-tooltip {
+      position: absolute;
+      width: 290px;
+      background: rgba(17, 24, 39, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px;
+      color: var(--text-main);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(6, 182, 212, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(8px);
+      z-index: 10000;
+      pointer-events: none;
+    }
+
+    .hotspot-tooltip.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .tooltip-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tooltip-desc {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .tooltip-files-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .tooltip-files-list {
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .tooltip-file-link {
+      font-size: 0.78rem;
+      padding: 6px 8px;
+      color: #e2e8f0;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tooltip-file-link:hover {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent-color);
+      padding-left: 12px;
+    }
+
+    /* Offline Landing Card Overlay */
+    .offline-card-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--bg-color);
+      z-index: 99999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .offline-card {
+      background: linear-gradient(145deg, #111827 0%, #030712 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 580px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 182, 212, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offline-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-color), #3b82f6);
+    }
+
+    .offline-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .offline-card-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .drop-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 40px;
+      cursor: pointer;
+      background-color: rgba(31, 41, 55, 0.2);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .drop-zone:hover {
+      border-color: var(--accent-color);
+      background-color: rgba(6, 182, 212, 0.03);
+    }
+
+    .drop-zone-icon {
+      width: 48px;
+      height: 48px;
+      stroke: var(--accent-color);
+      stroke-width: 1.5;
+      fill: none;
+      margin-bottom: 16px;
+    }
+
+    .drop-zone p {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .drop-zone span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .upload-btn {
+      background: linear-gradient(90deg, var(--accent-color) 0%, #2563eb 100%);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+    }
+
+    .offline-status {
+      font-size: 0.8rem;
+      color: var(--accent-color);
+      margin-top: 16px;
+      font-weight: 500;
+      height: 20px;
+    }
+
+    .offline-option-divider {
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .offline-option-divider::before, .offline-option-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--border-color);
+    }
+
+    .bypass-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .bypass-btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text-main);
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    /* Search Results Card Panel */
+    .search-results-panel {
+      position: absolute;
+      top: 100%;
+      left: 12px;
+      right: 12px;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      max-height: 380px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      padding: 8px 0;
+    }
+
+    .search-results-panel.active {
+      display: block;
+    }
+
+    .search-result-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      transition: all 0.2s ease;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background-color: rgba(6, 182, 212, 0.1);
+    }
+
+    .search-result-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .search-result-snippet {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-result-snippet mark {
+      background: rgba(6, 182, 212, 0.3);
+      color: #fff;
+      font-weight: 600;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Highlight class for content rendering search terms */
+    mark.search-hit {
+      background-color: rgba(253, 224, 71, 0.35); /* Soft yellow */
+      color: #fff;
+      border-bottom: 2px solid #eab308;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    /* Markdown Styling overrides */
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+    }
+    .markdown-body h1 { font-size: 1.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4em; }
+    .markdown-body h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.3em; }
+    .markdown-body h3 { font-size: 1.15rem; }
+    .markdown-body p { margin-bottom: 1.2em; line-height: 1.75; color: #d1d5db; font-size: 0.92rem; }
+    .markdown-body ul, .markdown-body ol { margin-bottom: 1.2em; padding-left: 2em; color: #d1d5db; font-size: 0.92rem; }
+    .markdown-body li { margin-bottom: 0.6em; }
+    .markdown-body code { font-family: monospace; background-color: #1f2937; color: var(--accent-hover); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; }
+    .markdown-body pre { background-color: #0d1117; padding: 20px; border-radius: 8px; overflow-x: auto; margin-bottom: 1.6em; border: 1px solid var(--border-color); position: relative; }
+    .markdown-body pre code { background-color: transparent; padding: 0; color: #e6edf3; }
+    
+    /* Code Copy Button */
+    .copy-code-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #1f2937;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s ease;
+    }
+    .markdown-body pre:hover .copy-code-btn {
+      opacity: 1;
+    }
+    .copy-code-btn:hover {
+      background: var(--accent-color);
+      color: #000;
+      border-color: var(--accent-color);
+    }
+
+    .markdown-body table { width: 100%; border-collapse: collapse; margin-bottom: 1.6em; font-size: 0.88rem; }
+    .markdown-body th, .markdown-body td { border: 1px solid var(--border-color); padding: 12px 16px; text-align: left; }
+    .markdown-body th { background-color: #1f2937; font-weight: 600; color: var(--accent-hover); }
+    .markdown-body blockquote { border-left: 4px solid var(--accent-color); padding-left: 18px; color: var(--text-muted); font-style: italic; margin-bottom: 1.2em; background-color: rgba(31, 41, 55, 0.2); padding-top: 8px; padding-bottom: 8px; border-radius: 0 6px 6px 0; }
+    .markdown-body a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dashed rgba(6, 182, 212, 0.4); transition: all 0.2s ease; }
+    .markdown-body a:hover { color: var(--accent-hover); border-bottom-style: solid; }
+
+    /* Alert styles matching github alerts */
+    .markdown-body blockquote.important { border-left-color: #38bdf8; background-color: rgba(56, 189, 248, 0.04); }
+    .markdown-body blockquote.warning { border-left-color: #f59e0b; background-color: rgba(245, 158, 11, 0.04); }
+    .markdown-body blockquote.tip { border-left-color: #10b981; background-color: rgba(16, 185, 129, 0.04); }
+
+    /* Zoom Button and Lightbox Modal Styles */
+    .mermaid-container {
+      position: relative;
+      margin: 24px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: #0d1117;
+      overflow: hidden;
+    }
+    
+    .zoom-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(31, 41, 55, 0.85);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      z-index: 5;
+    }
+    
+    .zoom-btn:hover {
+      background: var(--accent-color);
+      color: #000;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 12px var(--accent-color);
+    }
+    
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(3, 7, 18, 0.97);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+    }
+    
+    .lightbox-modal.active {
+      display: flex;
+    }
+    
+    .lightbox-content {
+      width: 100%;
+      height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background-color: #0b0f19;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+    
+    .lightbox-content svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .close-lightbox {
+      position: absolute;
+      top: 24px;
+      right: 40px;
+      background: #1f2937;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    
+    .close-lightbox:hover {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+    }
+
+    /* Mermaid diagrams custom render */
+    .mermaid {
+      background-color: #0d1117 !important;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Mermaid dark theme readability overrides */
+    .mermaid svg, .lightbox-content svg {
+      background: transparent !important;
+    }
+
+    /* Target all text elements in Mermaid */
+    .mermaid text,
+    .mermaid text *,
+    .mermaid .label,
+    .mermaid .label *,
+    .mermaid .node label,
+    .mermaid .node *,
+    .mermaid .edgeLabel,
+    .mermaid .edgeLabel *,
+    .mermaid .messageText,
+    .mermaid .noteText,
+    .mermaid .loopText,
+    .lightbox-content text,
+    .lightbox-content text *,
+    .lightbox-content .label,
+    .lightbox-content .label *,
+    .lightbox-content .node label,
+    .lightbox-content .node *,
+    .lightbox-content .edgeLabel,
+    .lightbox-content .edgeLabel *,
+    .lightbox-content .messageText,
+    .lightbox-content .noteText,
+    .lightbox-content .loopText {
+      color: #f3f4f6 !important;
+      fill: #f3f4f6 !important;
+    }
+
+    /* Edge line colors */
+    .mermaid .edgePath .path,
+    #zoom-modal-content .edgePath .path,
+    .mermaid .flowchart-link,
+    #zoom-modal-content .flowchart-link {
+      stroke: var(--accent-color) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    /* Arrow heads / markers */
+    .mermaid .marker,
+    .mermaid marker path,
+    #zoom-modal-content .marker,
+    #zoom-modal-content marker path {
+      fill: var(--accent-color) !important;
+      stroke: var(--accent-color) !important;
+    }
+
+    /* Standard Node Shapes (Flowcharts) */
+    .mermaid .node rect,
+    .mermaid .node circle,
+    .mermaid .node polygon,
+    .mermaid .node path,
+    #zoom-modal-content .node rect,
+    #zoom-modal-content .node circle,
+    #zoom-modal-content .node polygon,
+    #zoom-modal-content .node path {
+      fill: #1f2937 !important;
+      stroke: #374151 !important;
+      stroke-width: 1.5px !important;
+    }
+
+    /* Actor Boxes (Sequence Diagrams) */
+    .mermaid .actor,
+    .mermaid rect.actor,
+    #zoom-modal-content .actor,
+    #zoom-modal-content rect.actor {
+      fill: #1f2937 !important;
+      stroke: #374151 !important;
+    }
+
+    /* Note Boxes (Sequence Diagrams) */
+    .mermaid .note rect,
+    .mermaid rect.note,
+    .mermaid .note,
+    #zoom-modal-content .note rect,
+    #zoom-modal-content rect.note,
+    #zoom-modal-content .note {
+      fill: #111827 !important;
+      stroke: #374151 !important;
+    }
+
+    /* Note Text */
+    .mermaid .noteText,
+    .mermaid .noteText *,
+    #zoom-modal-content .noteText,
+    #zoom-modal-content .noteText * {
+      fill: #f3f4f6 !important;
+      color: #f3f4f6 !important;
+    }
+
+    /* Grid/Active Line for Sequence */
+    .mermaid .loopLine,
+    .mermaid .loopBox,
+    #zoom-modal-content .loopLine,
+    #zoom-modal-content .loopBox {
+      fill: #111827 !important;
+      stroke: #374151 !important;
+      fill-opacity: 0.25 !important;
+    }
+
+    /* Line connectors / messages */
+    .mermaid .messageLine0,
+    .mermaid .messageLine1,
+    #zoom-modal-content .messageLine0,
+    #zoom-modal-content .messageLine1 {
+      stroke: var(--accent-color) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    /* Label box background for edges */
+    .mermaid .edgeLabel rect,
+    .mermaid .labelBox,
+    #zoom-modal-content .edgeLabel rect,
+    #zoom-modal-content .labelBox {
+      fill: #0b0f19 !important;
+      stroke: #1f2937 !important;
+      fill-opacity: 0.85 !important;
+    }
+
+    /* Gantt Chart Readability overrides */
+    .mermaid .grid line,
+    .mermaid .grid path,
+    #zoom-modal-content .grid line,
+    #zoom-modal-content .grid path {
+      stroke: #1f2937 !important;
+    }
+    
+    .mermaid .section,
+    #zoom-modal-content .section {
+      fill: #111827 !important;
+      stroke: #1f2937 !important;
+    }
+    
+    .mermaid .sectionTitle,
+    #zoom-modal-content .sectionTitle {
+      fill: var(--accent-color) !important;
+      color: var(--accent-color) !important;
+      font-weight: 600 !important;
+    }
+    
+    .mermaid .taskText,
+    .mermaid .taskTextOutside,
+    .mermaid .taskTextInside,
+    #zoom-modal-content .taskText,
+    #zoom-modal-content .taskTextOutside,
+    #zoom-modal-content .taskTextInside {
+      fill: #f3f4f6 !important;
+      color: #f3f4f6 !important;
+      font-size: 11px !important;
+    }
+    
+    .mermaid .ganttTitle,
+    #zoom-modal-content .ganttTitle {
+      fill: #f3f4f6 !important;
+      color: #f3f4f6 !important;
+      font-weight: 700 !important;
+    }
+    
+    .mermaid .tick text,
+    #zoom-modal-content .tick text {
+      fill: var(--text-muted) !important;
+      color: var(--text-muted) !important;
+    }
+
+    .mermaid .task,
+    #zoom-modal-content .task {
+      fill: #1f2937 !important;
+      stroke: #374151 !important;
+    }
+    
+    .mermaid .task.active,
+    #zoom-modal-content .task.active {
+      fill: #0369a1 !important;
+      stroke: var(--accent-color) !important;
+    }
+    
+    .mermaid .task.done,
+    #zoom-modal-content .task.done {
+      fill: #111827 !important;
+      stroke: #1f2937 !important;
+    }
+    
+    .mermaid .task.crit,
+    #zoom-modal-content .task.crit {
+      fill: #991b1b !important;
+      stroke: #ef4444 !important;
+    }
+
+    /* KaTeX math formula readability */
+    .katex {
+      color: var(--text-main) !important;
+      font-size: 1.08em !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Offline Loading Landing Card -->
+  <div id="offline-landing-card" class="offline-card-overlay" style="display:none;">
+    <div class="offline-card">
+      <div class="offline-card-title">TOGAF Architecture Repository</div>
+      <div class="offline-card-subtitle">
+        You are opening this repository portal locally. Standard browser security (CORS) prevents loading local documents directly.<br><br>
+        <strong>Select or drag the root <code>togaf-NextGen Bank EA</code> folder</strong> below to unlock the portal in offline mode. No files are uploaded to any server.
+      </div>
+      
+      <div class="drop-zone" onclick="document.getElementById('folder-input').click()">
+        <svg class="drop-zone-icon" viewBox="0 0 24 24">
+          <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2z"/>
+          <polyline points="12 10 12 16"/>
+          <polyline points="9 13 12 10 15 13"/>
+        </svg>
+        <p>Click to choose the directory</p>
+        <span>Or drag and drop the folder here</span>
+      </div>
+      
+      <input type="file" id="folder-input" webkitdirectory directory multiple style="display:none">
+      
+      <button class="upload-btn" onclick="document.getElementById('folder-input').click()">Select Repository Folder</button>
+      <div class="offline-status" id="offline-load-status"></div>
+      
+      <div class="offline-option-divider">Or</div>
+      <button class="bypass-btn" onclick="bypassOfflineLoader()">Bypass (Expect CORS errors on file://)</button>
+    </div>
+  </div>
+
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside>
+      <div class="brand">
+        <h1>NextGen Bank EA</h1>
+        <p>Architecture Repository</p>
+      </div>
+      
+      <!-- Instant Search Box -->
+      <div class="search-container">
+        <div class="search-wrapper">
+          <input type="text" id="sidebar-search-input" class="search-input" placeholder="Search files &amp; contents..." autocomplete="off">
+          <svg class="search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        
+        <!-- Search suggestion panel -->
+        <div id="search-results" class="search-results-panel"></div>
+      </div>
+      
+      <div class="nav-sections" id="sidebar-folder-tree">
+        <!-- Tree dynamically populated by JavaScript -->
+      </div>
+    </aside>
+
+    <!-- Main Viewer Panel -->
+    <main>
+      <header>
+        <div class="breadcrumbs-container">
+          <div class="breadcrumbs" id="header-breadcrumbs">
+            <a href="#" onclick="loadDoc('README.md')">Home</a>
+          </div>
+          <div class="current-path" id="doc-path">Document: README.md</div>
+        </div>
+        
+        <!-- Segment Control: View Toggle -->
+        <div class="view-toggle-container">
+          <button class="view-toggle-btn active" id="btn-toggle-doc" onclick="switchView('doc')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Document View
+          </button>
+          <button class="view-toggle-btn" id="btn-toggle-visual" onclick="switchView('visual')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            Visual ADM Explorer
+          </button>
+        </div>
+        
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button id="offline-sync-btn" class="bypass-btn" style="padding:4px 8px; font-size:0.75rem; display:none;" onclick="showOfflineLoader()">Offline Reload</button>
+          <div class="badge-governed">TOGAF 10 COMPLIANT</div>
+        </div>
+      </header>
+      
+      <!-- Tabbed Browsing Bar -->
+      <div class="tab-bar" id="recent-tabs-bar">
+        <!-- Tabs added dynamically by Javascript -->
+      </div>
+      
+      <!-- Panel 1: Document Viewer Panel -->
+      <div class="panel-view active" id="view-doc-panel">
+        <div class="viewer-split-container">
+          <div class="viewer-area" id="doc-viewer-area">
+            <div class="content-container markdown-body" id="doc-content">
+              <p>Loading document...</p>
+            </div>
+          </div>
+          
+          <!-- Floating Table of Contents Sidebar -->
+          <div class="toc-sidebar">
+            <div class="toc-title">Table of Contents</div>
+            <ul class="toc-list" id="doc-toc-list">
+              <!-- TOC filled dynamically -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Panel 2: Visual Explorer Panel -->
+      <div class="panel-view" id="view-visual-panel">
+        <div class="visual-explorer-panel">
+          <div class="visual-explorer-container">
+            <div class="visual-explorer-header">
+              <h2>TOGAF ADM Phase Navigator</h2>
+              <p>Hover over any phase on the mind map below to inspect related architectural blueprints and compliance documentation.</p>
+            </div>
+            
+            <div class="mindmap-wrapper" id="mindmap-hotspot-wrapper">
+              <img src="adm-steps-mind-map.png" class="mindmap-img" id="explorer-mindmap-img" alt="ADM Steps Mind Map">
+              
+              <!-- Hotspot Overlays (Coordinates mapped to branches in the image) -->
+              <div class="hotspot" style="left: 48%; top: 2%; width: 28%; height: 23%;" data-phase="preliminary" aria-label="Preliminary Phase"></div>
+              <div class="hotspot" style="left: 48%; top: 26%; width: 24%; height: 21%;" data-phase="phase_a" aria-label="Phase A Vision"></div>
+              <div class="hotspot" style="left: 48%; top: 48%; width: 24%; height: 22%;" data-phase="phase_b" aria-label="Phase B Business Architecture"></div>
+              <div class="hotspot" style="left: 48%; top: 71%; width: 48%; height: 27%;" data-phase="phase_c" aria-label="Phase C Data and Application Architecture"></div>
+              <div class="hotspot" style="left: 3%; top: 71%; width: 44%; height: 27%;" data-phase="phase_d" aria-label="Phase D Technology Architecture"></div>
+              <div class="hotspot" style="left: 3%; top: 54%; width: 44%; height: 16%;" data-phase="phase_e" aria-label="Phase E Opportunities and Solutions"></div>
+              <div class="hotspot" style="left: 3%; top: 34%; width: 44%; height: 19%;" data-phase="phase_f" aria-label="Phase F Migration Planning"></div>
+              <div class="hotspot" style="left: 3%; top: 19%; width: 44%; height: 14%;" data-phase="phase_g" aria-label="Phase G Implementation Governance"></div>
+              <div class="hotspot" style="left: 3%; top: 2%; width: 44%; height: 16%;" data-phase="phase_h" aria-label="Phase H Architecture Change Management"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Lightbox Modal for zooming diagrams -->
+  <div id="zoom-modal" class="lightbox-modal">
+    <button class="close-lightbox" onclick="closeZoomModal()">Close (Esc)</button>
+    <div class="lightbox-content" id="zoom-modal-content"></div>
+  </div>
+
+  <script>
+    // Global States
+    window.localFiles = null;  // Stores offline file text & image Blob URLs
+    window.openTabs = [];      // Track active tabs: { title, path }
+    window.activeTabPath = ''; // Current path loaded
+    window.searchIndex = [];   // List of indexed files: { path, title, text }
+    
+    // Directory mapping for the Collapsible Navigation Tree
+    const treeStructure = [
+      {
+        folder: "Portals & Logs",
+        icon: "folder",
+        children: [
+          { name: "Root Landing Portal", path: "README.md" },
+          { name: "Repository Master Index", path: "architecture_repository/README.md" },
+          { name: "1. Metamodel Index", path: "architecture_repository/1_architecture_metamodel/README.md" },
+          { name: "2. Capability Index", path: "architecture_repository/2_architecture_capability/README.md" },
+          { name: "3. Landscape Index", path: "architecture_repository/3_architecture_landscape/README.md" },
+          { name: "4. Standards Index (SIB)", path: "architecture_repository/4_standards_information_base/README.md" },
+          { name: "5. Reference Library Index", path: "architecture_repository/5_reference_library/README.md" },
+          { name: "6. Governance Log Index", path: "architecture_repository/6_governance_log/README.md" }
+        ]
+      },
+      {
+        folder: "Governance Charters",
+        icon: "shield",
+        children: [
+          { name: "Core Principles", path: "architecture_repository/1_architecture_metamodel/architecture_principles.md" },
+          { name: "Governance Framework", path: "architecture_repository/2_architecture_capability/governance_framework.md" },
+          { name: "Board Decisions Log", path: "architecture_repository/6_governance_log/decisions/README.md" },
+          { name: "├─ DEC-001: SOW Approval", path: "architecture_repository/6_governance_log/decisions/DEC-2026-001_statement_of_work_approval.md" },
+          { name: "└─ DEC-002: Fineract Ledger", path: "architecture_repository/6_governance_log/decisions/DEC-2026-002_fineract_ledger_wrapper.md" },
+          { name: "Waiver Registry Log", path: "architecture_repository/6_governance_log/waivers/README.md" },
+          { name: "└─ WAV-001: CIBIL Latency", path: "architecture_repository/6_governance_log/waivers/WAV-2026-001_cibil_mock_latency.md" },
+          { name: "Compliance Reviews Log", path: "architecture_repository/6_governance_log/reviews/README.md" },
+          { name: "└─ REV-001: Onboarding Staging", path: "architecture_repository/6_governance_log/reviews/REV-2026-001_onboarding_staging.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Core)",
+        icon: "zap",
+        children: [
+          { name: "Segment Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/README.md" },
+          { name: "Statement of Work (SOW)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/statement_of_architecture_work.md" },
+          { name: "Prelim & Phase A Vision", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/preliminary_and_phase_a_vision.md" },
+          { name: "Stakeholder Comms Plan", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/stakeholder_communications_plan.md" },
+          { name: "Requirements Spec", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/architecture_requirements_specification.md" },
+          { name: "BPMN & Process Flows", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/bpmn_and_process_flows.md" },
+          { name: "Building Blocks Matrix", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/architecture_building_blocks.md" },
+          { name: "Phase B Business Arch", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business_architecture.md" },
+          { name: "Phase C Data Arch", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data_architecture.md" },
+          { name: "Phase C Application Arch", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application_architecture.md" },
+          { name: "Phase D Technology Arch", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology_architecture.md" },
+          { name: "Phase E-F Migration Roadmap", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration_roadmap.md" },
+          { name: "Phase G-H Governance", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance.md" },
+          { name: "Architecture Contract", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/architecture_contract.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase A Vision)",
+        icon: "compass",
+        children: [
+          { name: "Architecture Vision (Details)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_a_vision/architecture_vision.md" },
+          { name: "Business Capabilities Map", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_a_vision/business_capabilities.md" },
+          { name: "Stakeholder Power Grid", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_a_vision/stakeholder_management.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase B Business)",
+        icon: "briefcase",
+        children: [
+          { name: "Customer Journey Screens", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/customer_journey_and_stp.md" },
+          { name: "KYC & Disbursal Sequences", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/business_processes.md" },
+          { name: "Logical BABBs Catalog", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/business_building_blocks.md" },
+          { name: "EOD Recon & Settlement", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/reconciliation_settlement.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase C Data)",
+        icon: "database",
+        children: [
+          { name: "PostgreSQL Tables & Keys", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data/data_dictionary_and_models.md" },
+          { name: "DEPA Consent JSON Schema", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data/depa_consent_architecture.md" },
+          { name: "DPDP Purging Policies", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data/data_lifecycle_and_compliance.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase C App)",
+        icon: "cpu",
+        children: [
+          { name: "Microservices List", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/microservices_portfolio.md" },
+          { name: "OpenAPI Specs (YAML)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/api_specifications.md" },
+          { name: "Saga & Outbox Patterns", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/resilience_and_patterns.md" },
+          { name: "Partner SLA & Failover Matrix", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/partner_integration_matrix.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase D Tech)",
+        icon: "server",
+        children: [
+          { name: "AWS EKS & Net Topology", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/deployment_topology.md" },
+          { name: "Keycloak OIDC & KMS", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/security_architecture.md" },
+          { name: "Biometric & Device Defense", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/fraud_defense_system.md" },
+          { name: "Disaster Recovery (BCP)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/disaster_recovery_plan.md" },
+          { name: "API Gateway & Rate Limits", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/api_gateway_governance.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase E-F Roadmap)",
+        icon: "map",
+        children: [
+          { name: "Gap Analysis Matrix", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/gap_analysis_and_solutions.md" },
+          { name: "Transition Arch (TA1/TA2)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/transition_architectures.md" },
+          { name: "Work Packages & Timeline", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/migration_roadmap.md" },
+          { name: "TCO Sizing Model", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/tco_financial_model.md" }
+        ]
+      },
+      {
+        folder: "Lending STP (Phase G-H Gov)",
+        icon: "activity",
+        children: [
+          { name: "RBI DLG & DPDP Checklists", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance/compliance_guidelines.md" },
+          { name: "RFC Change Procedure", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance/change_management_governance.md" },
+          { name: "Metrics & Prometheus KPIs", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance/slas_and_kpis.md" }
+        ]
+      },
+      {
+        folder: "Reference: Templates",
+        icon: "copy",
+        children: [
+          { name: "Principles Template", path: "architecture_repository/5_reference_library/templates/architecture_principles_template.md" },
+          { name: "Statement of Work (SOW)", path: "architecture_repository/5_reference_library/templates/statement_of_architecture_work_template.md" },
+          { name: "Vision Template", path: "architecture_repository/5_reference_library/templates/architecture_vision_template.md" },
+          { name: "ADD Template", path: "architecture_repository/5_reference_library/templates/architecture_definition_document_template.md" },
+          { name: "Requirements Spec", path: "architecture_repository/5_reference_library/templates/architecture_requirements_specification_template.md" },
+          { name: "Roadmap Template", path: "architecture_repository/5_reference_library/templates/transition_architecture_roadmap_template.md" },
+          { name: "Contract Template", path: "architecture_repository/5_reference_library/templates/architecture_contract_template.md" },
+          { name: "Waiver Template", path: "architecture_repository/5_reference_library/templates/architecture_waiver_request_template.md" },
+          { name: "Compliance Audit", path: "architecture_repository/5_reference_library/templates/compliance_assessment_template.md" }
+        ]
+      },
+      {
+        folder: "Reference: Patterns & Models",
+        icon: "grid",
+        children: [
+          { name: "Models Index", path: "architecture_repository/5_reference_library/archimate_models/README.md" },
+          { name: "Patterns List", path: "architecture_repository/5_reference_library/patterns/README.md" },
+          { name: "Outbox Pattern", path: "architecture_repository/5_reference_library/patterns/outbox_pattern.md" },
+          { name: "Saga Pattern", path: "architecture_repository/5_reference_library/patterns/saga_pattern.md" },
+          { name: "Circuit Breaker Pattern", path: "architecture_repository/5_reference_library/patterns/circuit_breaker_pattern.md" }
+        ]
+      },
+      {
+        folder: "TOGAF 9 Certification",
+        icon: "compass",
+        children: [
+          { name: "Exam Syllabus & Mapping", path: "architecture_repository/5_reference_library/togaf_exam_guide.md" }
+        ]
+      },
+      {
+        folder: "Strategic & Capability indices",
+        icon: "external-link",
+        children: [
+          { name: "Strategic Landscape Index", path: "architecture_repository/3_architecture_landscape/strategic/README.md" },
+          { name: "Capability Landscape Index", path: "architecture_repository/3_architecture_landscape/capability/README.md" }
+        ]
+      }
+    ];
+
+    // Details for Visual Mindmap hotspots hover list
+    const phaseData = {
+      preliminary: {
+        title: "Preliminary Phase & Governance",
+        desc: "Defining core architecture capability boundaries, charters, and foundational architecture principles.",
+        files: [
+          { name: "Metamodel Index", path: "architecture_repository/1_architecture_metamodel/README.md" },
+          { name: "Core Architecture Principles", path: "architecture_repository/1_architecture_metamodel/architecture_principles.md" },
+          { name: "Capability Index", path: "architecture_repository/2_architecture_capability/README.md" },
+          { name: "Governance Framework", path: "architecture_repository/2_architecture_capability/governance_framework.md" }
+        ]
+      },
+      phase_a: {
+        title: "Phase A: Architecture Vision",
+        desc: "Establishing scope, high-level capability models, stakeholder agreements, and business case justification.",
+        files: [
+          { name: "Prelim & Phase A Vision", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/preliminary_and_phase_a_vision.md" },
+          { name: "Statement of Architecture Work", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/statement_of_architecture_work.md" },
+          { name: "Stakeholder Communications Plan", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/stakeholder_communications_plan.md" },
+          { name: "Architecture Vision (Details)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_a_vision/architecture_vision.md" },
+          { name: "Business Capabilities Map", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_a_vision/business_capabilities.md" },
+          { name: "Stakeholder Power Grid", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_a_vision/stakeholder_management.md" }
+        ]
+      },
+      phase_b: {
+        title: "Phase B: Business Architecture",
+        desc: "Mapping target customer journeys, origination BPMN flows, underwriting logic, and End-of-Day reconciliation.",
+        files: [
+          { name: "Business Architecture Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business_architecture.md" },
+          { name: "BPMN & Process Flows", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/bpmn_and_process_flows.md" },
+          { name: "Customer Journey Screens", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/customer_journey_and_stp.md" },
+          { name: "KYC & Disbursal Sequences", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/business_processes.md" },
+          { name: "Logical Business ABB Catalog", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/business_building_blocks.md" },
+          { name: "EOD Recon & Settlement", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_b_business/reconciliation_settlement.md" }
+        ]
+      },
+      phase_c: {
+        title: "Phase C: Data & Application Architecture",
+        desc: "Modeling PostgreSQL schemas, DEPA Account Aggregator consent flows, API endpoints, and Saga resilience orchestration.",
+        files: [
+          { name: "Data Architecture Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data_architecture.md" },
+          { name: "Application Architecture Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application_architecture.md" },
+          { name: "PostgreSQL Tables & Keys", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data/data_dictionary_and_models.md" },
+          { name: "DEPA Consent JSON Schema", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data/depa_consent_architecture.md" },
+          { name: "DPDP Purging Policies", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_data/data_lifecycle_and_compliance.md" },
+          { name: "Microservices List", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/microservices_portfolio.md" },
+          { name: "OpenAPI Specs (YAML)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/api_specifications.md" },
+          { name: "Saga & Outbox Patterns", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/resilience_and_patterns.md" },
+          { name: "Partner SLA & Failover Matrix", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_c_application/partner_integration_matrix.md" }
+        ]
+      },
+      phase_d: {
+        title: "Phase D: Technology Architecture",
+        desc: "Outlining multi-AZ EKS cluster topologies, Keycloak integration, KMS envelopes, biometric defenses, and disaster recovery.",
+        files: [
+          { name: "Technology Architecture Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology_architecture.md" },
+          { name: "AWS EKS & Net Topology", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/deployment_topology.md" },
+          { name: "Keycloak OIDC & KMS Security", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/security_architecture.md" },
+          { name: "Biometric & Device Defense", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/fraud_defense_system.md" },
+          { name: "Disaster Recovery (BCP)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/disaster_recovery_plan.md" },
+          { name: "API Gateway & Rate Limits", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_d_technology/api_gateway_governance.md" }
+        ]
+      },
+      phase_e: {
+        title: "Phase E: Opportunities & Solutions",
+        desc: "Executing gaps-to-solutions mapping, assessing building block matrices, and planning initial Transition Architectures (TA1/TA2).",
+        files: [
+          { name: "Building Blocks Matrix", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/architecture_building_blocks.md" },
+          { name: "Gap Analysis Matrix", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/gap_analysis_and_solutions.md" },
+          { name: "Transition Arch (TA1/TA2)", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/transition_architectures.md" }
+        ]
+      },
+      phase_f: {
+        title: "Phase F: Migration Planning",
+        desc: "Sequencing work packages, organizing resource pipelines, establishing project roadmaps, and calculating platform TCO.",
+        files: [
+          { name: "Migration Roadmap Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration_roadmap.md" },
+          { name: "Work Packages & Timeline", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/migration_roadmap.md" },
+          { name: "TCO Sizing Model", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_e_f_migration/tco_financial_model.md" }
+        ]
+      },
+      phase_g: {
+        title: "Phase G: Implementation Governance",
+        desc: "Constructing Architecture Contracts and formulating stage-gate reviews to govern developer delivery alignment.",
+        files: [
+          { name: "Governance Overview", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance.md" },
+          { name: "Architecture Contract", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/architecture_contract.md" }
+        ]
+      },
+      phase_h: {
+        title: "Phase H: Architecture Change Management",
+        desc: "Managing post-disbursal compliance updates, regulatory RBI DLG checklists, and continuous metrics logs.",
+        files: [
+          { name: "RFC Change Procedure", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance/change_management_governance.md" },
+          { name: "Metrics & Prometheus KPIs", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance/slas_and_kpis.md" },
+          { name: "RBI DLG & DPDP Checklists", path: "architecture_repository/3_architecture_landscape/segment/digital_lending_stp/phase_g_h_governance/compliance_guidelines.md" }
+        ]
+      }
+    };
+
+    // Initialize Mermaid
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        darkMode: true,
+        background: '#0d1117',
+        primaryColor: '#1f2937',
+        primaryTextColor: '#f3f4f6',
+        primaryBorderColor: '#374151',
+        lineColor: '#06b6d4',
+        secondaryColor: '#111827',
+        tertiaryColor: '#0b0f19',
+        nodeTextColor: '#f3f4f6',
+        edgeLabelBackground: '#111827',
+        labelTextColor: '#f3f4f6',
+        actorBkg: '#1f2937',
+        actorBorder: '#374151',
+        actorTextColor: '#f3f4f6',
+        signalColor: '#06b6d4',
+        signalTextColor: '#f3f4f6',
+        noteBkgColor: '#111827',
+        noteTextColor: '#f3f4f6',
+        noteBorderColor: '#374151',
+        loopTextColor: '#f3f4f6',
+        textColor: '#f3f4f6'
+      }
+    });
+
+    // Custom marked renderer to update links pointing to other local .md files
+    const renderer = new marked.Renderer();
+    renderer.link = function(token, title, text) {
+      let href = "";
+      let linkText = "";
+      if (token && typeof token === 'object') {
+        href = token.href || "";
+        linkText = token.text || "";
+      } else {
+        href = token || "";
+        linkText = text || "";
+      }
+
+      // If link is an absolute file:// path to a markdown file, parse it to load dynamically
+      if (href.startsWith('file:///') && href.endsWith('.md')) {
+        const parts = href.split('/togaf/');
+        if (parts.length > 1) {
+          const relativePath = parts[1].replace(/%20/g, ' ');
+          return `<a href="#" onclick="clickNavLink('${relativePath}')">${linkText}</a>`;
+        }
+      }
+      
+      // Handle relative paths inside markdown
+      if (href.endsWith('.md') && !href.startsWith('http') && !href.startsWith('file://')) {
+        const resolved = resolveRelativePath(window.activeTabPath, href);
+        return `<a href="#" onclick="clickNavLink('${resolved}')">${linkText}</a>`;
+      }
+      
+      return `<a href="${href}" target="_blank">${linkText}</a>`;
+    };
+
+    marked.setOptions({
+      renderer: renderer,
+      gfm: true,
+      breaks: true
+    });
+
+    // Helper: Path resolver for relative links in markdown
+    function resolveRelativePath(currentFile, relativePath) {
+      if (relativePath.startsWith('/') || relativePath.startsWith('http://') || relativePath.startsWith('https://') || relativePath.startsWith('file://')) {
+        return relativePath;
+      }
+      
+      const currentDirParts = currentFile.split('/');
+      currentDirParts.pop(); // remove filename to get directory
+      
+      const relativeParts = relativePath.split('/');
+      for (const part of relativeParts) {
+        if (part === '.' || part === '') {
+          continue;
+        } else if (part === '..') {
+          currentDirParts.pop();
+        } else {
+          currentDirParts.push(part);
+        }
+      }
+      return currentDirParts.join('/');
+    }
+
+    // App Startup logic
+    document.addEventListener("DOMContentLoaded", () => {
+      // Build sidebar folder tree HTML
+      buildSidebarTree();
+      
+      // Determine if running locally via file:// and trigger landing card if so
+      if (window.location.protocol === 'file:') {
+        showOfflineLoader();
+      } else {
+        // Load default doc
+        loadDoc('README.md');
+        // Build search index in background
+        buildSearchIndex();
+      }
+      
+      // Initialize drag and drop for folder upload
+      initDragAndDrop();
+      
+      // Setup hot-spot tooltip container
+      setupHotspotTooltips();
+    });
+
+    // Toggle view between Standard Doc and Visual Explorer
+    function switchView(mode) {
+      document.querySelectorAll('.view-toggle-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.panel-view').forEach(panel => panel.classList.remove('active'));
+      
+      if (mode === 'doc') {
+        document.getElementById('btn-toggle-doc').classList.add('active');
+        document.getElementById('view-doc-panel').classList.add('active');
+      } else if (mode === 'visual') {
+        document.getElementById('btn-toggle-visual').classList.add('active');
+        document.getElementById('view-visual-panel').classList.add('active');
+        // Fit mindmap to container if required
+        setTimeout(adjustMindmapLayout, 100);
+      }
+    }
+
+    // Adjust mind map image responsive scale
+    function adjustMindmapLayout() {
+      const img = document.getElementById('explorer-mindmap-img');
+      if (img && window.localFiles && window.localFiles['adm-steps-mind-map.png']) {
+        img.src = window.localFiles['adm-steps-mind-map.png'];
+      }
+    }
+
+    // Offline mode triggers
+    function showOfflineLoader() {
+      document.getElementById('offline-landing-card').style.display = 'flex';
+      document.getElementById('offline-sync-btn').style.display = 'block';
+    }
+
+    function bypassOfflineLoader() {
+      document.getElementById('offline-landing-card').style.display = 'none';
+      loadDoc('README.md');
+      buildSearchIndex();
+    }
+
+    // Drag and Drop folder loader logic
+    function initDragAndDrop() {
+      const dropZone = document.querySelector('.drop-zone');
+      const folderInput = document.getElementById('folder-input');
+      
+      // Prevent browser default file open
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, e => {
+          e.preventDefault();
+          e.stopPropagation();
+        }, false);
+      });
+      
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+          dropZone.style.borderColor = 'var(--accent-color)';
+          dropZone.style.backgroundColor = 'rgba(6, 182, 212, 0.08)';
+        }, false);
+      });
+      
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+          dropZone.style.borderColor = 'var(--border-color)';
+          dropZone.style.backgroundColor = 'rgba(31, 41, 55, 0.2)';
+        }, false);
+      });
+
+      // Handle drop
+      dropZone.addEventListener('drop', e => {
+        const dt = e.dataTransfer;
+        if (dt.items && dt.items[0] && dt.items[0].webkitGetAsEntry) {
+          // If browser supports webkitdirectory drag-drop
+          alert("Please use the 'Select Repository Folder' button to load the folder directly.");
+        }
+      });
+      
+      // Handle file selector change
+      folderInput.addEventListener('change', async (e) => {
+        const files = e.target.files;
+        if (files.length === 0) return;
+        
+        const loadStatus = document.getElementById('offline-load-status');
+        loadStatus.innerText = `Parsing files...`;
+        
+        window.localFiles = {};
+        let mdCount = 0;
+        let imgCount = 0;
+        
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          let path = file.webkitRelativePath;
+          
+          // Strip parent folder prefix (e.g. "togaf-NextGen Bank EA/README.md" -> "README.md")
+          const parts = path.split('/');
+          if (parts.length > 1) {
+            parts.shift();
+            path = parts.join('/');
+          }
+          
+          if (file.name.endsWith('.md')) {
+            const content = await file.text();
+            window.localFiles[path] = content;
+            mdCount++;
+          } else if (file.type.startsWith('image/')) {
+            // Convert images to Object URLs for local offline loading
+            const objectUrl = URL.createObjectURL(file);
+            window.localFiles[path] = objectUrl;
+            imgCount++;
+          }
+        }
+        
+        loadStatus.innerText = `Successfully loaded ${mdCount} docs and ${imgCount} images!`;
+        
+        // Build search index
+        buildSearchIndex();
+        
+        // If there's a custom local mindmap, load it in the Explorer
+        if (window.localFiles['adm-steps-mind-map.png']) {
+          document.getElementById('explorer-mindmap-img').src = window.localFiles['adm-steps-mind-map.png'];
+        }
+        
+        setTimeout(() => {
+          document.getElementById('offline-landing-card').style.display = 'none';
+          loadDoc('README.md');
+        }, 800);
+      });
+    }
+
+    // Build sidebar folder tree structure HTML
+    function buildSidebarTree() {
+      const treeContainer = document.getElementById('sidebar-folder-tree');
+      treeContainer.innerHTML = '';
+      
+      treeStructure.forEach((group, index) => {
+        const navGroup = document.createElement('div');
+        navGroup.className = 'nav-group';
+        
+        const headerId = `folder-header-${index}`;
+        const childrenId = `folder-children-${index}`;
+        
+        // Icon rendering
+        let iconSvg = '';
+        if (group.icon === 'folder') {
+          iconSvg = `<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>`;
+        } else if (group.icon === 'shield') {
+          iconSvg = `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>`;
+        } else if (group.icon === 'zap') {
+          iconSvg = `<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>`;
+        } else if (group.icon === 'compass') {
+          iconSvg = `<circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>`;
+        } else if (group.icon === 'briefcase') {
+          iconSvg = `<rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>`;
+        } else if (group.icon === 'database') {
+          iconSvg = `<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>`;
+        } else if (group.icon === 'cpu') {
+          iconSvg = `<rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line>`;
+        } else if (group.icon === 'server') {
+          iconSvg = `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line>`;
+        } else if (group.icon === 'map') {
+          iconSvg = `<polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line>`;
+        } else if (group.icon === 'activity') {
+          iconSvg = `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>`;
+        } else if (group.icon === 'copy') {
+          iconSvg = `<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>`;
+        } else if (group.icon === 'grid') {
+          iconSvg = `<rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>`;
+        } else {
+          iconSvg = `<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>`;
+        }
+
+        // Expanded state from localStorage
+        const isExpanded = localStorage.getItem(headerId) === 'true';
+        const folderHeaderClass = isExpanded ? 'folder-header expanded' : 'folder-header';
+        const childrenClass = isExpanded ? 'folder-children expanded' : 'folder-children';
+
+        navGroup.innerHTML = `
+          <div class="${folderHeaderClass}" id="${headerId}" onclick="toggleFolder('${headerId}', '${childrenId}')">
+            <svg class="folder-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">${iconSvg}</svg>
+            <span>${group.folder}</span>
+          </div>
+          <div class="${childrenClass}" id="${childrenId}">
+            ${group.children.map(child => `
+              <div class="nav-link" data-path="${child.path}" onclick="clickNavLink('${child.path}')">
+                <svg class="file-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                ${child.name}
+              </div>
+            `).join('')}
+          </div>
+        `;
+        
+        treeContainer.appendChild(navGroup);
+      });
+    }
+
+    function toggleFolder(headerId, childrenId) {
+      const header = document.getElementById(headerId);
+      const children = document.getElementById(childrenId);
+      
+      const willExpand = !children.classList.contains('expanded');
+      
+      if (willExpand) {
+        header.classList.add('expanded');
+        children.classList.add('expanded');
+      } else {
+        header.classList.remove('expanded');
+        children.classList.remove('expanded');
+      }
+      
+      localStorage.setItem(headerId, willExpand);
+    }
+
+    // Breadcrumbs rendering
+    function renderBreadcrumbs(filePath) {
+      const breadcrumbs = document.getElementById('header-breadcrumbs');
+      breadcrumbs.innerHTML = '<a href="#" onclick="clickNavLink(\'README.md\')">Home</a>';
+      
+      const parts = filePath.split('/');
+      let currentPathAccumulator = '';
+      
+      parts.forEach((part, index) => {
+        if (part === 'README.md' && index === 0) return;
+        
+        const isLast = index === parts.length - 1;
+        const separator = document.createElement('span');
+        separator.innerText = ' / ';
+        breadcrumbs.appendChild(separator);
+        
+        if (isLast) {
+          const span = document.createElement('span');
+          span.innerText = part.replace('.md', '').replace(/_/g, ' ');
+          breadcrumbs.appendChild(span);
+        } else {
+          currentPathAccumulator += (index === 0 ? '' : '/') + part;
+          // Determine if there is a README.md inside this folder
+          const subReadme = `${currentPathAccumulator}/README.md`;
+          
+          const a = document.createElement('a');
+          a.href = '#';
+          a.innerText = part.replace(/_/g, ' ');
+          a.onclick = function() {
+            clickNavLink(subReadme);
+          };
+          breadcrumbs.appendChild(a);
+        }
+      });
+    }
+
+    // Load and Render Document
+    function loadDoc(filePath, keywordToHighlight = '') {
+      document.getElementById('doc-path').innerText = `Document: ${filePath}`;
+      window.activeTabPath = filePath;
+      
+      // Update sidebar active link state
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(filePath)) {
+          link.classList.add('active');
+          // Automatically expand its parent folder if not expanded
+          const parentChildren = link.closest('.folder-children');
+          if (parentChildren && !parentChildren.classList.contains('expanded')) {
+            const index = parentChildren.id.split('-').pop();
+            toggleFolder(`folder-header-${index}`, parentChildren.id);
+          }
+        }
+      });
+
+      // Update breadcrumbs
+      renderBreadcrumbs(filePath);
+
+      // Handle file retrieval
+      let filePromise;
+      if (window.localFiles && window.localFiles[filePath]) {
+        filePromise = Promise.resolve(window.localFiles[filePath]);
+      } else {
+        filePromise = fetch(filePath).then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to load ${filePath}. Ensure your local server is running.`);
+          }
+          return response.text();
+        });
+      }
+
+      filePromise
+        .then(text => {
+          // Resolve standard blockquote alerts (like > [!IMPORTANT]) to custom styling
+          let formattedText = text.replace(/>\s*\[!(IMPORTANT|NOTE|WARNING|TIP|CAUTION)\]/gi, (match, p1) => {
+            return `> **${p1.toUpperCase()}**:`;
+          });
+
+          // Render Markdown to HTML
+          const rawHtml = marked.parse(formattedText);
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = rawHtml;
+
+          // Replace local image sources with Blob URLs if available in offline mode
+          const imgElements = tempDiv.querySelectorAll('img');
+          imgElements.forEach(img => {
+            const src = img.getAttribute('src');
+            const resolvedPath = resolveRelativePath(filePath, src);
+            if (window.localFiles && window.localFiles[resolvedPath]) {
+              img.src = window.localFiles[resolvedPath];
+            }
+          });
+
+          // Replace Mermaid markdown codeblocks with rendering elements and zoom buttons
+          const preElements = tempDiv.querySelectorAll('pre');
+          preElements.forEach(pre => {
+            const code = pre.querySelector('code');
+            
+            // Add a Copy Code Button
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-code-btn';
+            copyBtn.innerText = 'Copy';
+            copyBtn.onclick = function() {
+              const textToCopy = code ? code.textContent : pre.textContent;
+              navigator.clipboard.writeText(textToCopy).then(() => {
+                copyBtn.innerText = 'Copied!';
+                setTimeout(() => copyBtn.innerText = 'Copy', 2000);
+              });
+            };
+            pre.appendChild(copyBtn);
+
+            if (code && code.className === 'language-mermaid') {
+              const container = document.createElement('div');
+              container.className = 'mermaid-container';
+              
+              const zoomBtn = document.createElement('button');
+              zoomBtn.className = 'zoom-btn';
+              zoomBtn.innerHTML = '🔎 Zoom &amp; Pan';
+              zoomBtn.onclick = function() {
+                openZoomModal(container.querySelector('.mermaid svg'));
+              };
+              
+              const mermaidDiv = document.createElement('div');
+              mermaidDiv.className = 'mermaid';
+              mermaidDiv.textContent = code.textContent;
+              
+              container.appendChild(zoomBtn);
+              container.appendChild(mermaidDiv);
+              pre.replaceWith(container);
+            }
+          });
+
+          const docContent = document.getElementById('doc-content');
+          docContent.innerHTML = '';
+          while (tempDiv.firstChild) {
+            docContent.appendChild(tempDiv.firstChild);
+          }
+
+          // Highlight search keyword if any
+          if (keywordToHighlight) {
+            highlightSearchTerm(docContent, keywordToHighlight);
+          }
+
+          // Render Mermaid diagrams
+          mermaid.run();
+
+          // Render Math formulas using KaTeX auto-render
+          if (typeof renderMathInElement === 'function') {
+            renderMathInElement(docContent, {
+              delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '\\[', right: '\\]', display: true}
+              ],
+              throwOnError: false
+            });
+          }
+
+          // Generate Table of Contents
+          buildTOC(docContent);
+          
+          // Scroll to top of doc viewer
+          document.getElementById('doc-viewer-area').scrollTop = 0;
+        })
+        .catch(err => {
+          document.getElementById('doc-content').innerHTML = `
+            <div style="padding: 20px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.1);">
+              <h3 style="color: #f87171; margin-bottom: 8px;">Failed to Load File</h3>
+              <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 4px;"><strong>Error details:</strong> <code>${err.message}</code></p>
+              <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 4px;"><strong>Attempted to fetch:</strong> <code>${filePath}</code></p>
+              <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 8px;"><strong>Resolved URL:</strong> <code>${new URL(filePath, window.location.href).href}</code></p>
+              <p style="font-size: 0.9rem; margin-top: 12px; color: var(--text-muted);"><em>CORS policy warning:</em> If you are opening this file directly via <code>file://</code> in a browser, click the <strong>Offline Reload</strong> button to select the local folder.</p>
+            </div>
+          `;
+          document.getElementById('doc-toc-list').innerHTML = '';
+        });
+    }
+
+    // Handles Navigation click - syncs with Tab Bar
+    function clickNavLink(filePath) {
+      // Find document title
+      let title = filePath.split('/').pop().replace('.md', '').replace(/_/g, ' ');
+      
+      // Look up formatted title in treeStructure
+      for (const section of treeStructure) {
+        const found = section.children.find(c => c.path === filePath);
+        if (found) {
+          title = found.name;
+          break;
+        }
+      }
+
+      addTab(title, filePath);
+      loadDoc(filePath);
+      switchView('doc');
+    }
+
+    // Tab bar manager
+    function addTab(title, path) {
+      // Check if tab already exists
+      const existing = window.openTabs.find(tab => tab.path === path);
+      if (!existing) {
+        window.openTabs.push({ title, path });
+      }
+      renderTabs();
+    }
+
+    function removeTab(path, e) {
+      if (e) e.stopPropagation();
+      
+      const tabIndex = window.openTabs.findIndex(t => t.path === path);
+      if (tabIndex === -1) return;
+      
+      window.openTabs.splice(tabIndex, 1);
+      
+      // If we closed the active tab, load another one
+      if (window.activeTabPath === path) {
+        if (window.openTabs.length > 0) {
+          // Load adjacent tab or first tab
+          const nextActiveIndex = Math.min(tabIndex, window.openTabs.length - 1);
+          const nextActiveTab = window.openTabs[nextActiveIndex];
+          loadDoc(nextActiveTab.path);
+        } else {
+          loadDoc('README.md');
+        }
+      }
+      
+      renderTabs();
+    }
+
+    function renderTabs() {
+      const tabsBar = document.getElementById('recent-tabs-bar');
+      tabsBar.innerHTML = '';
+      
+      // Always show Home/Readme tab as sticky if tabs list is empty, or add it
+      if (window.openTabs.length === 0) {
+        window.openTabs.push({ title: "Home Portal", path: "README.md" });
+      }
+
+      window.openTabs.forEach(tab => {
+        const isActive = tab.path === window.activeTabPath;
+        const tabDiv = document.createElement('div');
+        tabDiv.className = isActive ? 'tab active' : 'tab';
+        tabDiv.onclick = () => {
+          loadDoc(tab.path);
+          renderTabs();
+        };
+        
+        tabDiv.innerHTML = `
+          <span>${tab.title}</span>
+          ${tab.path !== 'README.md' ? `<span class="tab-close" onclick="removeTab('${tab.path}', event)">×</span>` : ''}
+        `;
+        tabsBar.appendChild(tabDiv);
+      });
+    }
+
+    // Build Floating Table of Contents
+    function buildTOC(contentDiv) {
+      const tocList = document.getElementById('doc-toc-list');
+      tocList.innerHTML = '';
+      
+      const headings = contentDiv.querySelectorAll('h1, h2, h3');
+      if (headings.length === 0) {
+        const emptyItem = document.createElement('li');
+        emptyItem.className = 'toc-item';
+        emptyItem.innerHTML = `<span class="toc-link" style="color:var(--text-muted)">No sections found</span>`;
+        tocList.appendChild(emptyItem);
+        return;
+      }
+      
+      headings.forEach((heading, idx) => {
+        // Inject a unique ID if it doesn't have one
+        const id = `heading-section-${idx}`;
+        heading.id = id;
+        
+        const depth = parseInt(heading.tagName.substring(1));
+        const li = document.createElement('li');
+        li.className = 'toc-item';
+        
+        const a = document.createElement('a');
+        a.className = `toc-link toc-depth-${depth}`;
+        a.innerText = heading.textContent.replace(':', '').replace(/^[^a-zA-Z0-9]+/, '');
+        a.onclick = function() {
+          heading.scrollIntoView({ behavior: 'smooth' });
+          
+          // Highlight active TOC item
+          document.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
+          a.classList.add('active');
+        };
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+    }
+
+    // Simple scroll spy logic for TOC sidebar
+    const viewerArea = document.getElementById('doc-viewer-area');
+    viewerArea.addEventListener('scroll', () => {
+      const headings = document.getElementById('doc-content').querySelectorAll('h1, h2, h3');
+      if (headings.length === 0) return;
+      
+      let activeHeadingId = '';
+      const triggerBound = 150; // Scroll trigger boundary
+      
+      for (let i = 0; i < headings.length; i++) {
+        const rect = headings[i].getBoundingClientRect();
+        if (rect.top <= triggerBound) {
+          activeHeadingId = headings[i].id;
+        } else if (i === 0) {
+          activeHeadingId = headings[i].id; // Fallback to first heading
+        }
+      }
+      
+      if (activeHeadingId) {
+        document.querySelectorAll('.toc-link').forEach(link => {
+          link.classList.remove('active');
+          const heading = document.getElementById(activeHeadingId);
+          if (heading && link.innerText === heading.textContent.replace(':', '').replace(/^[^a-zA-Z0-9]+/, '')) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+
+    // In-memory indexing and Search bar logic
+    function buildSearchIndex() {
+      window.searchIndex = [];
+      
+      if (window.localFiles) {
+        // Index loaded offline files
+        for (const [path, content] of Object.entries(window.localFiles)) {
+          if (path.endsWith('.md')) {
+            const title = getTitleFromMarkdown(content, path);
+            window.searchIndex.push({ path, title, text: content });
+          }
+        }
+      } else {
+        // Index online files in background
+        treeStructure.forEach(section => {
+          section.children.forEach(child => {
+            fetch(child.path)
+              .then(res => res.text())
+              .then(text => {
+                window.searchIndex.push({ path: child.path, title: child.name, text: text });
+              })
+              .catch(() => {});
+          });
+        });
+      }
+    }
+
+    function getTitleFromMarkdown(mdText, filePath) {
+      const match = mdText.match(/^#\s+(.+)$/m);
+      if (match) return match[1];
+      const filename = filePath.split('/').pop().replace('.md', '');
+      return filename.replace(/_/g, ' ');
+    }
+
+    // Search input listener
+    const searchInput = document.getElementById('sidebar-search-input');
+    const searchResults = document.getElementById('search-results');
+    
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim();
+      if (!query) {
+        searchResults.classList.remove('active');
+        return;
+      }
+      
+      const hits = performSearch(query);
+      renderSearchResults(hits, query);
+    });
+
+    function performSearch(query) {
+      const lowercaseQuery = query.toLowerCase();
+      const results = [];
+      
+      window.searchIndex.forEach(doc => {
+        const titleMatch = doc.title.toLowerCase().includes(lowercaseQuery);
+        const textMatchIndex = doc.text.toLowerCase().indexOf(lowercaseQuery);
+        
+        if (titleMatch || textMatchIndex !== -1) {
+          let snippet = '';
+          if (textMatchIndex !== -1) {
+            const start = Math.max(0, textMatchIndex - 30);
+            const end = Math.min(doc.text.length, textMatchIndex + query.length + 30);
+            snippet = doc.text.substring(start, end).replace(/[\r\n]+/g, ' ');
+            if (start > 0) snippet = '...' + snippet;
+            if (end < doc.text.length) snippet += '...';
+          } else {
+            snippet = doc.text.substring(0, 70).replace(/[\r\n]+/g, ' ') + '...';
+          }
+          
+          results.push({
+            path: doc.path,
+            title: doc.title,
+            snippet: snippet,
+            score: titleMatch ? 15 : 2
+          });
+        }
+      });
+      
+      return results.sort((a,b) => b.score - a.score).slice(0, 10);
+    }
+
+    function renderSearchResults(hits, query) {
+      searchResults.innerHTML = '';
+      if (hits.length === 0) {
+        searchResults.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+      } else {
+        hits.forEach(hit => {
+          const div = document.createElement('div');
+          div.className = 'search-result-item';
+          div.onclick = () => {
+            searchResults.classList.remove('active');
+            searchInput.value = '';
+            clickNavLink(hit.path);
+            // Re-run load doc with highlight context
+            loadDoc(hit.path, query);
+          };
+          
+          // Escape HTML in snippet
+          let escapedSnippet = hit.snippet.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          
+          // Re-insert mark highlighting for the search query
+          const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+          escapedSnippet = escapedSnippet.replace(regex, '<mark>$1</mark>');
+
+          div.innerHTML = `
+            <div class="search-result-title">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              ${hit.title}
+            </div>
+            <div class="search-result-snippet">${escapedSnippet}</div>
+          `;
+          searchResults.appendChild(div);
+        });
+      }
+      searchResults.classList.add('active');
+    }
+
+    // Hide search results on click outside
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+        searchResults.classList.remove('active');
+      }
+    });
+
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Highlight query helper
+    function highlightSearchTerm(container, term) {
+      if (!term) return;
+      const regex = new RegExp(`(${escapeRegExp(term)})`, 'gi');
+      
+      function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          if (node.parentNode && 
+              node.parentNode.tagName !== 'CODE' && 
+              node.parentNode.tagName !== 'PRE' && 
+              node.parentNode.tagName !== 'SCRIPT' && 
+              node.parentNode.tagName !== 'STYLE' &&
+              node.parentNode.tagName !== 'A' &&
+              !node.parentNode.classList.contains('search-hit')) {
+            const text = node.nodeValue;
+            if (regex.test(text)) {
+              const span = document.createElement('span');
+              span.innerHTML = text.replace(regex, '<mark class="search-hit">$1</mark>');
+              node.parentNode.replaceChild(span, node);
+            }
+          }
+        } else {
+          const children = Array.from(node.childNodes);
+          for (const child of children) {
+            walk(child);
+          }
+        }
+      }
+      walk(container);
+    }
+
+    // Copy code block helper
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.tagName === 'PRE') {
+        const btn = e.target.querySelector('.copy-code-btn');
+        if (btn) btn.style.opacity = '1';
+      }
+    });
+    
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.tagName === 'PRE') {
+        const btn = e.target.querySelector('.copy-code-btn');
+        if (btn) btn.style.opacity = '0';
+      }
+    });
+
+    // Visual Explorer Mindmap Hotspots Tooltip management
+    let tooltipEl = null;
+    let tooltipTimer = null;
+
+    function showTooltip(data, rect) {
+      if (tooltipTimer) {
+        clearTimeout(tooltipTimer);
+        tooltipTimer = null;
+      }
+      
+      let linksHtml = data.files.map(file => `
+        <div class="tooltip-file-link" onclick="clickNavLink('${file.path}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          ${file.name}
+        </div>
+      `).join('');
+      
+      tooltipEl.innerHTML = `
+        <div class="tooltip-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
+          ${data.title}
+        </div>
+        <div class="tooltip-desc">${data.desc}</div>
+        <div class="tooltip-files-title">Documents</div>
+        <div class="tooltip-files-list">${linksHtml}</div>
+      `;
+      
+      tooltipEl.classList.add('active');
+      
+      // Position tooltip relative to hotspot rect
+      let top = rect.top + window.scrollY;
+      let left = rect.right + 10 + window.scrollX;
+      
+      // Boundary checking
+      if (left + 300 > window.innerWidth) {
+        left = rect.left - 310 + window.scrollX;
+      }
+      if (top + 200 > window.innerHeight) {
+        top = window.innerHeight - 250 + window.scrollY;
+      }
+      
+      tooltipEl.style.top = `${top}px`;
+      tooltipEl.style.left = `${left}px`;
+    }
+
+    function hideTooltip() {
+      if (tooltipTimer) clearTimeout(tooltipTimer);
+      tooltipTimer = setTimeout(() => {
+        tooltipEl.classList.remove('active');
+      }, 250); // 250ms grace period
+    }
+
+    function setupHotspotTooltips() {
+      tooltipEl = document.createElement('div');
+      tooltipEl.className = 'hotspot-tooltip';
+      document.body.appendChild(tooltipEl);
+      
+      const hotspots = document.querySelectorAll('.hotspot');
+      hotspots.forEach(hotspot => {
+        hotspot.addEventListener('mouseenter', () => {
+          const phaseKey = hotspot.getAttribute('data-phase');
+          const data = phaseData[phaseKey];
+          if (!data) return;
+          const rect = hotspot.getBoundingClientRect();
+          showTooltip(data, rect);
+        });
+        
+        hotspot.addEventListener('mouseleave', () => {
+          hideTooltip();
+        });
+      });
+      
+      // Clear hide timer when entering tooltip
+      tooltipEl.addEventListener('mouseenter', () => {
+        if (tooltipTimer) {
+          clearTimeout(tooltipTimer);
+          tooltipTimer = null;
+        }
+      });
+      
+      // Hide when leaving tooltip
+      tooltipEl.addEventListener('mouseleave', () => {
+        hideTooltip();
+      });
+    }
+
+    // Pan-Zoom active instance tracker for modal
+    let panZoomInstance = null;
+
+    function openZoomModal(svgElement) {
+      if (!svgElement) return;
+      
+      const modal = document.getElementById('zoom-modal');
+      const contentContainer = document.getElementById('zoom-modal-content');
+      
+      // Clone the SVG element so we don't modify the inline page version
+      const clonedSvg = svgElement.cloneNode(true);
+      clonedSvg.removeAttribute('width');
+      clonedSvg.removeAttribute('height');
+      clonedSvg.style.width = '100%';
+      clonedSvg.style.height = '100%';
+      
+      contentContainer.innerHTML = '';
+      contentContainer.appendChild(clonedSvg);
+      modal.classList.add('active');
+      
+      // Prevent body scroll when modal is active
+      document.body.style.overflow = 'hidden';
+      
+      // Initialize pan-zoom library on the cloned SVG
+      setTimeout(() => {
+        panZoomInstance = svgPanZoom(clonedSvg, {
+          zoomEnabled: true,
+          controlIconsEnabled: true,
+          fit: true,
+          center: true,
+          minZoom: 0.1,
+          maxZoom: 20
+        });
+      }, 50);
+    }
+
+    function closeZoomModal() {
+      const modal = document.getElementById('zoom-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      
+      if (panZoomInstance) {
+        panZoomInstance.destroy();
+        panZoomInstance = null;
+      }
+      document.getElementById('zoom-modal-content').innerHTML = '';
+    }
+
+    // Listen for Escape key to close the zoom view
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeZoomModal();
+      }
+    });
+  </script>
+</body>
+</html>

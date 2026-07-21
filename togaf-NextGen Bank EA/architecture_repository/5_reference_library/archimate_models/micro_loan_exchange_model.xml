@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/model/"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.opengroup.org/xsd/archimate/3.0/model/ http://www.opengroup.org/xsd/archimate/3.0/model/archimate3_Model.xsd"
+       identifier="id-micro-loan-exchange-model"
+       name="NextGen Bank Micro-Loan Platform Exchange Model">
+  
+  <metadata>
+    <schema>ArchiMate Model Exchange File Format Standard v3.0</schema>
+    <schemaversion>3.0</schemaversion>
+  </metadata>
+
+  <elements>
+    <!-- Business Layer Elements -->
+    <element identifier="id-actor-borrower" xsi:type="BusinessActor">
+      <name xml:lang="en">Borrower (Young Mobile User)</name>
+    </element>
+    <element identifier="id-cap-identity-verify" xsi:type="BusinessCapability">
+      <name xml:lang="en">Identity &amp; Liveness Verification</name>
+    </element>
+    <element identifier="id-cap-underwriting" xsi:type="BusinessCapability">
+      <name xml:lang="en">Instant Underwriting &amp; Pricing</name>
+    </element>
+    <element identifier="id-cap-auto-repay" xsi:type="BusinessCapability">
+      <name xml:lang="en">Auto-Repayment Setup</name>
+    </element>
+
+    <!-- Application Layer Elements -->
+    <element identifier="id-app-onboarding" xsi:type="ApplicationComponent">
+      <name xml:lang="en">go-onboarding Microservice</name>
+    </element>
+    <element identifier="id-app-risk" xsi:type="ApplicationComponent">
+      <name xml:lang="en">python-risk Underwriting Engine</name>
+    </element>
+    <element identifier="id-app-payments" xsi:type="ApplicationComponent">
+      <name xml:lang="en">go-payments Hub</name>
+    </element>
+
+    <!-- Technology Layer Elements -->
+    <element identifier="id-node-eks" xsi:type="Node">
+      <name xml:lang="en">AWS EKS Cluster</name>
+    </element>
+    <element identifier="id-sys-kms" xsi:type="SystemSoftware">
+      <name xml:lang="en">AWS KMS / CloudHSM</name>
+    </element>
+  </elements>
+
+  <relationships>
+    <!-- App realizations of capabilities -->
+    <relationship identifier="id-rel-ex-1" xsi:type="Realization" source="id-app-onboarding" target="id-cap-identity-verify"/>
+    <relationship identifier="id-rel-ex-2" xsi:type="Realization" source="id-app-risk" target="id-cap-underwriting"/>
+    <relationship identifier="id-rel-ex-3" xsi:type="Realization" source="id-app-payments" target="id-cap-auto-repay"/>
+
+    <!-- Tech serving Apps -->
+    <relationship identifier="id-rel-ex-4" xsi:type="Serving" source="id-node-eks" target="id-app-onboarding"/>
+    <relationship identifier="id-rel-ex-5" xsi:type="Serving" source="id-node-eks" target="id-app-risk"/>
+    <relationship identifier="id-rel-ex-6" xsi:type="Serving" source="id-node-eks" target="id-app-payments"/>
+    <relationship identifier="id-rel-ex-7" xsi:type="Serving" source="id-sys-kms" target="id-app-onboarding"/>
+
+    <!-- Actor assigned to Capability -->
+    <relationship identifier="id-rel-ex-8" xsi:type="Assignment" source="id-actor-borrower" target="id-cap-identity-verify"/>
+  </relationships>
+</model>

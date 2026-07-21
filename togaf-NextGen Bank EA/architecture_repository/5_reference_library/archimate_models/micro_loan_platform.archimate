@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="NextGen Bank Micro-Loan Platform" id="id-model-micro-loan" version="4.0.0">
+  <folder name="Strategy" id="id-folder-strategy" type="strategy">
+    <element xsi:type="archimate:Resource" name="Digital Credit Assessment Engine" id="id-res-underwrite-engine"/>
+  </folder>
+  <folder name="Business" id="id-folder-business" type="business">
+    <element xsi:type="archimate:BusinessActor" name="Borrower (Young Mobile User)" id="id-actor-borrower"/>
+    <element xsi:type="archimate:BusinessCapability" name="Identity &amp; Liveness Verification" id="id-cap-identity-verify"/>
+    <element xsi:type="archimate:BusinessCapability" name="Instant Underwriting &amp; Pricing" id="id-cap-underwriting"/>
+    <element xsi:type="archimate:BusinessCapability" name="Auto-Repayment Setup" id="id-cap-auto-repay"/>
+  </folder>
+  <folder name="Application" id="id-folder-application" type="application">
+    <element xsi:type="archimate:ApplicationComponent" name="go-onboarding" id="id-app-onboarding"/>
+    <element xsi:type="archimate:ApplicationComponent" name="python-risk" id="id-app-risk"/>
+    <element xsi:type="archimate:ApplicationComponent" name="go-payments" id="id-app-payments"/>
+  </folder>
+  <folder name="Technology &amp; Physical" id="id-folder-technology" type="technology">
+    <element xsi:type="archimate:Node" name="AWS EKS (Kubernetes Cluster)" id="id-node-eks"/>
+    <element xsi:type="archimate:SystemSoftware" name="AWS KMS / HSM Key Custody" id="id-sys-kms"/>
+  </folder>
+  <folder name="Relations" id="id-folder-relations" type="relations">
+    <!-- Realization Relationships: Apps implementing Capabilities -->
+    <element xsi:type="archimate:RealizationRelationship" id="id-rel-realize-1" source="id-app-onboarding" target="id-cap-identity-verify"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-rel-realize-2" source="id-app-risk" target="id-cap-underwriting"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-rel-realize-3" source="id-app-payments" target="id-cap-auto-repay"/>
+    
+    <!-- Serving Relationships: Tech serving Application components -->
+    <element xsi:type="archimate:ServingRelationship" id="id-rel-serve-1" source="id-node-eks" target="id-app-onboarding"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-rel-serve-2" source="id-node-eks" target="id-app-risk"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-rel-serve-3" source="id-node-eks" target="id-app-payments"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-rel-serve-4" source="id-sys-kms" target="id-app-onboarding"/>
+    
+    <!-- Association: Actors utilizing Capabilities -->
+    <element xsi:type="archimate:AssignmentRelationship" id="id-rel-assign-1" source="id-actor-borrower" target="id-cap-identity-verify"/>
+  </folder>
+</archimate:model>
